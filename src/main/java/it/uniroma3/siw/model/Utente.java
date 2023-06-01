@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 @Entity
 public class Utente {
 
+	public static final int maxPrenotazioniGiornaliere=3;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

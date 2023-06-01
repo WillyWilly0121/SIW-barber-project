@@ -1,6 +1,7 @@
 package it.uniroma3.siw.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -33,7 +34,7 @@ public class PrestazioneEffettuata {
     @Column(nullable = false,name = "data_prestazione")
     @NotNull
     @FutureOrPresent
-    private Date dataPrestazione;
+    private LocalDate dataPrestazione;
     
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -63,11 +64,11 @@ public class PrestazioneEffettuata {
 		this.utente = utente;
 	}
 
-	public Date getDataPrestazione() {
+	public LocalDate getDataPrestazione() {
 		return dataPrestazione;
 	}
 
-	public void setDataPrestazione(Date dataPrestazione) {
+	public void setDataPrestazione(LocalDate dataPrestazione) {
 		this.dataPrestazione = dataPrestazione;
 	}
 

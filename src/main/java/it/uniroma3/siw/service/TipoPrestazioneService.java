@@ -16,4 +16,15 @@ public class TipoPrestazioneService {
 		return this.tipoPrestazioneRepository.findAll();
 	}
 
+	public TipoPrestazione findById(Long id) throws Exception{
+		TipoPrestazione tp= tipoPrestazioneRepository.findById(id).orElse(null);
+		if (tp==null){
+			throw new Exception("tipoPrestazione.notFound");
+		}
+		return tp;
+	}
+
+	public void save(TipoPrestazione tipoPrestazione) {
+		tipoPrestazioneRepository.save(tipoPrestazione);
+	}
 }

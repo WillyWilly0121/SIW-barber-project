@@ -6,7 +6,7 @@
 		</a>
 	</div>
 
-	<div th:if="${userDetails}" class="col-md-3 text-end">
+	<div th:if="${userDetails!=null}" class="col-md-3 text-end">
 		<div class="dropdown">
 			<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
 				aria-expanded="false" th:text="${userDetails.username}">
@@ -18,7 +18,7 @@
 			</ul>
 		</div>
 	</div>
-	<div th:unless="${userDetails}" class="col-md-3 text-end">
+	<div th:unless="${userDetails!=null}" class="col-md-3 text-end">
 		<a href="/login"><button type="button" class="btn btn-outline-primary me-2" th:text="'Login'"></button></a>
 	</div>
 </header>

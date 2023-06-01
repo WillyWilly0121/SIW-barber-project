@@ -1,4 +1,5 @@
 package it.uniroma3.siw.service;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
@@ -32,11 +33,11 @@ public class PrenotazioneService {
 		}
 	}
 
-    Map<Date,Integer> ottieniNumeroPrenotazioniPerData(Long barberId) {
-        HashMap<Date,Integer> result = new HashMap<>();
+    public Map<LocalDate,Integer> ottieniNumeroPrenotazioniPerData(Long barberId) {
+        HashMap<LocalDate,Integer> result = new HashMap<>();
         for (Object[] tuple: prenotazioneRepository.ottieniNumeroPrenotazioniPerData(barberId)){
-            Date data = (Date) tuple[0];
-            Integer count= (Integer) tuple[1];
+			LocalDate data = LocalDate.parse(tuple[0].toString());
+            Integer count= Integer.parseInt(tuple[1].toString());
             result.put(data,count);
         }
         return result;

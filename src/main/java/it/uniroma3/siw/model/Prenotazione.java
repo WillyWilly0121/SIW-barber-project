@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -32,12 +33,12 @@ public class Prenotazione {
     @NotNull
     @FutureOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataPrestazione;
+    private LocalDate dataPrestazione;
 
     @Column(nullable = false,name = "data_prenotazione")
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataPrenotazione;
+    private LocalDate dataPrenotazione;
 
     public Long getId() {
         return id;
@@ -71,19 +72,19 @@ public class Prenotazione {
         this.prestazione = prestazione;
     }
 
-    public Date getDataPrestazione() {
+    public LocalDate getDataPrestazione() {
         return dataPrestazione;
     }
 
-    public void setDataPrestazione(Date data) {
+    public void setDataPrestazione(LocalDate data) {
         this.dataPrestazione = data;
     }
 
-    public Date getDataPrenotazione() {
+    public LocalDate getDataPrenotazione() {
         return dataPrenotazione;
     }
 
-    public void setDataPrenotazione(Date dataPrenotazione) {
+    public void setDataPrenotazione(LocalDate dataPrenotazione) {
         this.dataPrenotazione = dataPrenotazione;
     }
 

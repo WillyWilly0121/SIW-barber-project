@@ -36,7 +36,7 @@ public class PrestazioneEffettuata {
     private Date dataPrestazione;
     
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private TipoPrestazione prestazione;
 
 	public Long getId() {

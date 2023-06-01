@@ -15,4 +15,5 @@ public class TipoPrestazioneService {
 	public Iterable<TipoPrestazione> findAllTipiPrestazioni(){
 		return this.tipoPrestazioneRepository.findAll();
 	}
+
 }

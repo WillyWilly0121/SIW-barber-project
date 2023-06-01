@@ -98,4 +98,26 @@ public class PrenotazioneController {
 		}
 	}
 	
+    @GetMapping("/admin/PrenotazioniUtente/{id}")
+    public String prenotazioniUtente(@PathVariable("id") Long userId,Model model){
+        try {
+            model.addAttribute("prestazioni", this.prenotazioneService.findAllByUtente(utenteService.getUser(userId)));
+            return "";
+        } catch(Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "index.html";
+        }
+    }
+
+    @GetMapping("/admin/PrenotazioniBarbiere/{id}")
+    public String prenotazioniBarbiere(@PathVariable("id") Long barberId,Model model){
+        try {
+            model.addAttribute("prestazioni", this.prenotazioneService.findAllByBarbiere(utenteService.getUser(barberId)));
+            return "";
+        } catch(Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "index.html";
+        }
+    }
+	
 }

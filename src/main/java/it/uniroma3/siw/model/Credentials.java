@@ -23,6 +23,20 @@ public class Credentials {
 	private String role;
 	@OneToOne
 	private Utente utente;
+	
+	
+	public boolean isAdmin() {
+		return this.role.equals(ADMIN_ROLE);
+	}
+	
+	public boolean isBarber() {
+		return this.role.equals(BARBER_ROLE);
+	}
+	
+	public boolean isUser() {
+		return this.role.equals(DEFAULT_ROLE);
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -52,12 +66,6 @@ public class Credentials {
 	}
 	public void setUser(Utente user) {
 		this.utente = user;
-	}
-	public boolean isAdmin() {
-		if (this.role.equals(Credentials.ADMIN_ROLE)) {
-			return true;
-		}
-		return false;
 	}
 	@Override
 	public int hashCode() {

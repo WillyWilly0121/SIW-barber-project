@@ -5,7 +5,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.repository.CredentialsRepository;
 import it.uniroma3.siw.repository.UtenteRepository;
 
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ public class UtenteService {
 
     @Autowired
     protected UtenteRepository userRepository;
+    
+    @Autowired
+    protected CredentialsRepository credentialsRepository;
 
     /**
      * This method retrieves a User from the DB based on its ID.
@@ -55,5 +60,14 @@ public class UtenteService {
         for(Utente user : iterable)
             result.add(user);
         return result;
+    }
+    
+    public List<Utente> getAllBarbieri() {
+    	Iterable<Credentials> credenziali = this.credentialsRepository.findAllByRole(Credentials.BARBER_ROLE);
+    	ArrayList<Utente> utenti = new ArrayList<>();
+    	for(Credentials credenziale : credenziali) {
+    		utenti.add(credenziale.getUser());
+    	}
+    	return utenti;
     }
 }

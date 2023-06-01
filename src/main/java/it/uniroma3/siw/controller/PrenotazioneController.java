@@ -63,9 +63,9 @@ public class PrenotazioneController {
 			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Credentials c = credentialsService.getCredentials(user.getUsername());
 			if(c.getRole().equals(Credentials.DEFAULT_ROLE)) {
-				return "redirect:/user/PrenotazioniUtente";
+				return "redirect:/user/Prenotazioni";
 			} else {
-				return "redirect:/barber/PrenotazioniBarbiere";
+				return "redirect:/barber/Prenotazioni";
 			}
 		} catch(Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
@@ -73,7 +73,7 @@ public class PrenotazioneController {
 		}
 	}
 	
-	@GetMapping("/user/PrenotazioniUtente")
+	@GetMapping("/user/Prenotazioni")
 	public String prenotazioniUtente(Model model) {
 		try {
 			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -87,7 +87,7 @@ public class PrenotazioneController {
 		}
 	}
 	
-	@GetMapping("/barber/PrenotazioniBarbiere")
+	@GetMapping("/barber/Prenotazioni")
 	public String prenotazioniBarbiere(Model model) {
 		try {
 			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

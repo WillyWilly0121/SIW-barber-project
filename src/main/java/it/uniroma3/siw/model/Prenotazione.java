@@ -27,7 +27,7 @@ public class Prenotazione {
     private Utente utente;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private TipoPrestazione prestazione;
 
     @Column(nullable = false,name = "data_prestazione")

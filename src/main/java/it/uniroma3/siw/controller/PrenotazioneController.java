@@ -36,33 +36,15 @@ public class PrenotazioneController {
     @Autowired
     TipoPrestazioneService tipoPrestazioneService;
 
-
-    @GetMapping("/user/formNewPrenotazione")
-    public String formNuovaPrenotazione(Model model) {
-        model.addAttribute("prenotazione", new Prenotazione());
-        return "/user/formNewPrenotazione.html";
-    }
-
     @GetMapping("/user/resocontoPrenotazione/{id}")
     public String resocontoPrenotazione(@PathVariable("id") Long id, Model model) {
         try {
             Prenotazione p = this.prenotazioneService.getPrenotazione(id);
             model.addAttribute("prenotazione", p);
-            return "/user/confermaPrenotazione.html";
+            return "/user/resocontoPrenotazione.html";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index.html";
-        }
-    }
-
-    @PostMapping("/user/nuovaPrenotazione")
-    public String newPrenotazione(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione,
-                                  BindingResult bindingResult, Model model) {
-        if (!bindingResult.hasErrors()) {
-            prenotazioneService.salvaPrenotazione(prenotazione);
-            return "redirect:/user/resocontoPrenotazione/" + prenotazione.getId();
-        } else {
-            return "/user/formNewPrenotazione.html";
         }
     }
 
@@ -133,7 +115,7 @@ public class PrenotazioneController {
     }
 
     @GetMapping("/user/prenota/{tp}/{bar}")
-    public String scegliBarbiere(@PathVariable("tp") Long tp, @PathVariable("bar") Long barberId, Model model) {
+    public String scegliData(@PathVariable("tp") Long tp, @PathVariable("bar") Long barberId, Model model) {
         model.addAttribute("idTP", tp);
         model.addAttribute("idBar", barberId);
 
@@ -149,7 +131,7 @@ public class PrenotazioneController {
         }
 
         model.addAttribute("opzioniDate", opzioniDate);
-        return "user/scegliBarbiere";
+        return "user/scegliData";
     }
 
     @GetMapping("/user/prenota/{tp}/{bar}/{data}")
@@ -171,7 +153,7 @@ public class PrenotazioneController {
             return "redirect:/user/resocontoPrenotazione/" + p.getId();
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "/user/prenota";
+            return "/index";
         }
     }
 

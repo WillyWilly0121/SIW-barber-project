@@ -9,7 +9,8 @@
 </head>
 
 <body>
-<div th:each="tipoP:${tipiPrestazione}" th:text="${tipoP.nome}">
+<div th:each="tipoP:${tipiPrestazione}">
+    <a th:href="@{'/user/prenota/'+${tipoP.id}}"  th:text="${tipoP.nome}"></a>
 </div>
 
 

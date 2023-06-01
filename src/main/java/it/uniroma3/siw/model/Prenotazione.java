@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"barbiere", "data_prestazione"}), @UniqueConstraint(columnNames = {"utente", "data_prestazione"})})
 public class Prenotazione {
 
     @Id

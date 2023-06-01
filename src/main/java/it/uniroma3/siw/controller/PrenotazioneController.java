@@ -20,20 +20,20 @@ import jakarta.validation.Valid;
 
 @Controller
 public class PrenotazioneController {
-	
-	@Autowired 
+
+	@Autowired
 	private CredentialsService credentialsService;
-	@Autowired 
+	@Autowired
 	PrenotazioneService prenotazioneService;
-	@Autowired 
+	@Autowired
 	UtenteService utenteService;
-	
+
 	@GetMapping("/user/formNewPrenotazione")
 	public String formNuovaPrenotazione(Model model) {
 		model.addAttribute("prenotazione", new Prenotazione());
 		return "/user/formNewPrenotazione.html";
 	}
-	
+
 	@GetMapping("/user/resocontoPrenotazione/{id}")
 	public String resocontoPrenotazione(@PathVariable("id") Long id, Model model) {
 		try {
@@ -45,79 +45,87 @@ public class PrenotazioneController {
 			return "index.html";
 		}
 	}
-	
+
 	@PostMapping("/user/nuovaPrenotazione")
-	public String newPrenotazione(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione, BindingResult bindingResult, Model model) {
-		if(!bindingResult.hasErrors()) {
+	public String newPrenotazione(@Valid @ModelAttribute("prenotazione") Prenotazione prenotazione,
+			BindingResult bindingResult, Model model) {
+		if (!bindingResult.hasErrors()) {
 			prenotazioneService.salvaPrenotazione(prenotazione);
 			return "redirect:/user/resocontoPrenotazione/" + prenotazione.getId();
 		} else {
 			return "/user/formNewPrenotazione.html";
 		}
 	}
-	
+
 	@GetMapping("/Prenotazioni")
 	public String prenotazioni(Model model) {
 		try {
 			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Credentials c = credentialsService.getCredentials(user.getUsername());
-			if(c.getRole().equals(Credentials.DEFAULT_ROLE)) {
+			Credentials c = credentialsService.getCredentials(user.getUsername());
+			if (c.getRole().equals(Credentials.DEFAULT_ROLE)) {
 				return "redirect:/user/Prenotazioni";
 			} else {
 				return "redirect:/barber/Prenotazioni";
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "index.html";
 		}
 	}
-	
+
 	@GetMapping("/user/Prenotazioni")
 	public String prenotazioniUtente(Model model) {
 		try {
 			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Credentials c = credentialsService.getCredentials(user.getUsername());
+			Credentials c = credentialsService.getCredentials(user.getUsername());
 			model.addAttribute("prenotazioni", this.prenotazioneService.findAllByUtente(c.getUser()));
 			return "";
-		} catch(Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "index.html";
 		}
 	}
-	
+
 	@GetMapping("/barber/Prenotazioni")
 	public String prenotazioniBarbiere(Model model) {
 		try {
 			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Credentials c = credentialsService.getCredentials(user.getUsername());
+			Credentials c = credentialsService.getCredentials(user.getUsername());
 			model.addAttribute("prenotazioni", this.prenotazioneService.findAllByBarbiere(c.getUser()));
 			return "";
-		} catch(Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "index.html";
 		}
 	}
-	
-    @GetMapping("/admin/PrenotazioniUtente/{id}")
-    public String prenotazioniUtente(@PathVariable("id") Long userId,Model model){
-        try {
-            model.addAttribute("prestazioni", this.prenotazioneService.findAllByUtente(utenteService.getUser(userId)));
-            return "";
-        } catch(Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
-        }
-    }
 
-    @GetMapping("/admin/PrenotazioniBarbiere/{id}")
-    public String prenotazioniBarbiere(@PathVariable("id") Long barberId,Model model){
-        try {
-            model.addAttribute("prestazioni", this.prenotazioneService.findAllByBarbiere(utenteService.getUser(barberId)));
-            return "";
-        } catch(Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
-        }
-    }
-	
+	@GetMapping("/admin/PrenotazioniUtente/{id}")
+	public String prenotazioniUtente(@PathVariable("id") Long userId, Model model) {
+		try {
+			model.addAttribute("prenotazioni", this.prenotazioneService.findAllByUtente(utenteService.getUser(userId)));
+			return "";
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "index.html";
+		}
+	}
+
+	@GetMapping("/admin/PrenotazioniBarbiere/{id}")
+	public String prenotazioniBarbiere(@PathVariable("id") Long barberId, Model model) {
+		try {
+			model.addAttribute("prenotazioni",
+					this.prenotazioneService.findAllByBarbiere(utenteService.getUser(barberId)));
+			return "";
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "index.html";
+		}
+	}
+
+	@GetMapping("/admin/Prenotazioni")
+	public String getAllPrenotazioni(@PathVariable("id") Long barberId, Model model) {
+		model.addAttribute("prenotazioni", this.prenotazioneService.getAllPrenotazioni());
+		return "";
+	}
+
 }

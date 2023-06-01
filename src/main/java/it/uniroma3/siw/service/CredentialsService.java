@@ -21,8 +21,12 @@ public class CredentialsService {
 	
 	@Transactional
 	public Credentials getCredentials(Long id) throws Exception{
-		Optional<Credentials> result = this.credentialsRepository.findById(id);
-		return result.orElse(null);
+		Credentials result = this.credentialsRepository.findById(id).orElse(null);
+		if(result==null) {
+			throw new Exception("credentials.notFound");
+		} else {
+			return result;
+		}
 	}
 
 	@Transactional

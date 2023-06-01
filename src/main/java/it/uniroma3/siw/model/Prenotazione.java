@@ -7,7 +7,6 @@ import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Prenotazione {

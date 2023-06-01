@@ -20,7 +20,7 @@ public class CredentialsService {
 	protected CredentialsRepository credentialsRepository;
 	
 	@Transactional
-	public Credentials getCredentials(Long id) {
+	public Credentials getCredentials(Long id) throws Exception{
 		Optional<Credentials> result = this.credentialsRepository.findById(id);
 		return result.orElse(null);
 	}

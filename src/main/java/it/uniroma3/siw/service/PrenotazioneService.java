@@ -2,11 +2,14 @@ package it.uniroma3.siw.service;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Prenotazione;
 import it.uniroma3.siw.model.PrestazioneEffettuata;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.repository.PrenotazioneRepository;
 import it.uniroma3.siw.repository.PrestazioneEffettuataRepository;
 import jakarta.transaction.Transactional;
@@ -20,6 +23,14 @@ public class PrenotazioneService {
 	@Autowired
 	private PrestazioneEffettuataRepository prestazioneEffettuataResository;
 	
+	public Prenotazione getPrenotazione(Long id) throws Exception {
+		Prenotazione pr = this.prenotazioneRepository.findById(id).orElse(null);
+		if(pr==null) {
+			throw new Exception("prenotazione.notFound"); 
+		} else {
+			return pr;
+		}
+	}
 
     Map<Date,Integer> ottieniNumeroPrenotazioniPerData(Long barberId) {
         HashMap<Date,Integer> result = new HashMap<>();
@@ -60,5 +71,13 @@ public class PrenotazioneService {
 			this.prestazioneEffettuataResository.save(p);
 			this.eliminaPrenotazione(id);
 		}
+	}
+	
+	public List<Prenotazione> findAllByUtente(Utente u){
+		return this.prenotazioneRepository.findAllByUtente(u);
+	}
+	
+	public List<Prenotazione> findAllByBarbiere(Utente u){
+		return this.prenotazioneRepository.findAllByBarbiere(u);
 	}
 }

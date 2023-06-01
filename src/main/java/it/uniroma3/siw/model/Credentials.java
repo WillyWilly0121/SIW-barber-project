@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 @Entity
 public class Credentials {
 	public static final String DEFAULT_ROLE = "DEFAULT";
+	public static final String BARBER_ROLE = "BARBER";
 	public static final String ADMIN_ROLE = "ADMIN";
 	
 	@Id

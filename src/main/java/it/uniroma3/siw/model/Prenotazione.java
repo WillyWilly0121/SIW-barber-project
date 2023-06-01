@@ -5,6 +5,7 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -19,26 +20,25 @@ public class Prenotazione {
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "barbiere")
-    @NotNull
     private Utente barbiere;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "utente")
-    @NotNull
     private Utente utente;
 
-    @ManyToMany
+    @ManyToOne
     @Column(nullable = false)
-    @NotEmpty
-    private List<TipoPrestazione> prestazioni;
+    private TipoPrestazione prestazione;
 
     @Column(nullable = false,name = "data_prestazione")
     @NotNull
     @FutureOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataPrestazione;
 
     @Column(nullable = false,name = "data_prenotazione")
     @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataPrenotazione;
 
     public Long getId() {
@@ -65,12 +65,12 @@ public class Prenotazione {
         this.utente = utente;
     }
 
-    public List<TipoPrestazione> getPrestazioni() {
-        return prestazioni;
+    public TipoPrestazione getPrestazione() {
+        return prestazione;
     }
 
-    public void setPrestazioni(List<TipoPrestazione> prestazioni) {
-        this.prestazioni = prestazioni;
+    public void setPrestazione(TipoPrestazione prestazione) {
+        this.prestazione = prestazione;
     }
 
     public Date getDataPrestazione() {

@@ -1,6 +1,7 @@
 package it.uniroma3.siw.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,4 +38,62 @@ public class PrestazioneEffettuata {
     @ManyToOne
     @Column(nullable = false)
     private TipoPrestazione prestazione;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Utente getBarbiere() {
+		return barbiere;
+	}
+
+	public void setBarbiere(Utente barbiere) {
+		this.barbiere = barbiere;
+	}
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+
+	public Date getDataPrestazione() {
+		return dataPrestazione;
+	}
+
+	public void setDataPrestazione(Date dataPrestazione) {
+		this.dataPrestazione = dataPrestazione;
+	}
+
+	public TipoPrestazione getPrestazione() {
+		return prestazione;
+	}
+
+	public void setPrestazione(TipoPrestazione prestazione) {
+		this.prestazione = prestazione;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(barbiere, dataPrestazione, utente);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PrestazioneEffettuata other = (PrestazioneEffettuata) obj;
+		return Objects.equals(barbiere, other.barbiere) && Objects.equals(dataPrestazione, other.dataPrestazione)
+				&& Objects.equals(utente, other.utente);
+	}
 }

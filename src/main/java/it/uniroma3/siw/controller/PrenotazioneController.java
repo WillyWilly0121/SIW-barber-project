@@ -1,6 +1,8 @@
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,14 +57,15 @@ public class PrenotazioneController {
 		}
 	}
 	
-	@GetMapping("/Prenotazioni/{id}")
-	public String prenotazioni(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/Prenotazioni")
+	public String prenotazioni(Model model) {
 		try {
-			Credentials c = this.credentialsService.getCredentials(id);
+			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Credentials c = credentialsService.getCredentials(user.getUsername());
 			if(c.getRole().equals(Credentials.DEFAULT_ROLE)) {
-				return "redirect:/user/PrenotazioniUtente/" + c.getUser().getId();
+				return "redirect:/user/PrenotazioniUtente";
 			} else {
-				return "redirect:/barber/PrenotazioniBarbiere/" + c.getUser().getId();
+				return "redirect:/barber/PrenotazioniBarbiere";
 			}
 		} catch(Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
@@ -70,10 +73,12 @@ public class PrenotazioneController {
 		}
 	}
 	
-	@GetMapping("/user/PrenotazioniUtente/{id}")
-	public String prenotazioniUtente(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/user/PrenotazioniUtente")
+	public String prenotazioniUtente(Model model) {
 		try {
-			Utente u = this.utenteService.getUser(id);
+			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Credentials c = credentialsService.getCredentials(user.getUsername());
+			Utente u = this.utenteService.getUser(c.getUser().getId());
 			model.addAttribute("prenotazioni", this.prenotazioneService.findAllByUtente(u));
 			return "";
 		} catch(Exception e) {
@@ -82,10 +87,12 @@ public class PrenotazioneController {
 		}
 	}
 	
-	@GetMapping("/barber/PrenotazioniBarbiere/{id}")
-	public String prenotazioniBarbiere(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/barber/PrenotazioniBarbiere")
+	public String prenotazioniBarbiere(Model model) {
 		try {
-			Utente u = this.utenteService.getUser(id);
+			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Credentials c = credentialsService.getCredentials(user.getUsername());
+			Utente u = this.utenteService.getUser(c.getUser().getId());
 			model.addAttribute("prenotazioni", this.prenotazioneService.findAllByBarbiere(u));
 			return "";
 		} catch(Exception e) {

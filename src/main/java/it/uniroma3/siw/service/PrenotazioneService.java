@@ -57,8 +57,13 @@ public class PrenotazioneService {
     }
 
     @Transactional
-    public void eliminaPrenotazione(Long id) {
-        this.prenotazioneRepository.deleteById(id);
+    public void eliminaPrenotazione(Long id) throws Exception{
+    	Prenotazione pr = this.prenotazioneRepository.findById(id).orElse(null);
+        if (pr == null) {
+            throw new Exception("prenotazione.notFound");
+        } else {
+            this.prenotazioneRepository.delete(pr);
+        }
     }
 
     @Transactional

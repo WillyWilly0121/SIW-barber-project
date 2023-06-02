@@ -42,7 +42,7 @@ public class PrenotazioneController {
             return "index.html";
         }
     }
-
+    
     @GetMapping("/Prenotazioni")
     public String prenotazioni(Model model) {
         try {
@@ -65,7 +65,7 @@ public class PrenotazioneController {
             UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Credentials c = credentialsService.getCredentials(user.getUsername());
             model.addAttribute("prenotazioni", this.prenotazioneService.findAllByUtente(c.getUser()));
-            return "";
+            return "user/prenotazioni.html";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index.html";
@@ -78,7 +78,7 @@ public class PrenotazioneController {
             UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Credentials c = credentialsService.getCredentials(user.getUsername());
             model.addAttribute("prenotazioni", this.prenotazioneService.findAllByBarbiere(c.getUser()));
-            return "";
+            return "barber/prenotazioni.html";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index.html";
@@ -94,6 +94,28 @@ public class PrenotazioneController {
             model.addAttribute("errorMessage", e.getMessage());
             return "index.html";
         }
+    }
+    
+    @GetMapping("/eliminaPrenotazione/{id}")
+    public String eliminaPrenotazione(@PathVariable("id") Long id, Model model) {
+    	 try {
+             this.prenotazioneService.eliminaPrenotazione(id);
+             return "redirect:/Prenotazioni";
+         } catch (Exception e) {
+             model.addAttribute("errorMessage", e.getMessage());
+             return "index.html";
+         }
+    }
+    
+    @GetMapping("/effettuaPrenotazione/{id}")
+    public String effettuaPrenotazione(@PathVariable("id") Long id, Model model) {
+    	 try {
+             this.prenotazioneService.effettuaPrenotazione(id);
+             return "redirect:/Prenotazioni";
+         } catch (Exception e) {
+             model.addAttribute("errorMessage", e.getMessage());
+             return "index.html";
+         }
     }
 
     @GetMapping("/user/prenota")

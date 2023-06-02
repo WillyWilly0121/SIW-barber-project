@@ -93,11 +93,11 @@ public class PrenotazioneService {
     }
 
     public List<Prenotazione> findAllByUtente(Utente u) {
-        return this.prenotazioneRepository.findAllByUtente(u);
+        return this.prenotazioneRepository.findAllByUtenteOrderByDataPrestazione(u);
     }
 
     public List<Prenotazione> findAllByBarbiere(Utente u) {
-        return this.prenotazioneRepository.findAllByBarbiere(u);
+        return this.prenotazioneRepository.findAllByBarbiereOrderByDataPrestazione(u);
     }
 
     public List<Prenotazione> findAllByBarbiere_Id(Long barberId) {

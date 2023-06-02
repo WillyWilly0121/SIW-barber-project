@@ -18,9 +18,9 @@ public interface PrenotazioneRepository extends CrudRepository<Prenotazione, Lon
 
     Integer countPrenotazioneByBarbiere_IdAndDataPrestazione(Long barberId, LocalDate data);
     
-    List<Prenotazione> findAllByUtente(Utente u);
+    List<Prenotazione> findAllByUtenteOrderByDataPrestazione(Utente u);
     
-    List<Prenotazione> findAllByBarbiere(Utente u);
+    List<Prenotazione> findAllByBarbiereOrderByDataPrestazione(Utente u);
 
     List<Prenotazione> findAllByBarbiere_Id(Long barberId);
 }

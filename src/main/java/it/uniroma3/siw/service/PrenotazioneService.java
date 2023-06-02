@@ -73,13 +73,18 @@ public class PrenotazioneService {
         if (pr == null) {
             throw new Exception("prenotazione.notFound");
         } else {
-            p.setBarbiere(pr.getBarbiere());
-            p.setDataPrestazione(pr.getDataPrestazione());
-            p.setPrestazione(pr.getPrestazione());
-            p.setBarbiere(pr.getBarbiere());
-            p.setUtente(pr.getUtente());
-            this.prestazioneEffettuataResository.save(p);
-            this.eliminaPrenotazione(id);
+        	if(pr.getDataPrestazione().equals(LocalDate.now())) {
+        		 p.setBarbiere(pr.getBarbiere());
+                 p.setDataPrestazione(pr.getDataPrestazione());
+                 p.setPrestazione(pr.getPrestazione());
+                 p.setBarbiere(pr.getBarbiere());
+                 p.setUtente(pr.getUtente());
+                 this.prestazioneEffettuataResository.save(p);
+                 this.eliminaPrenotazione(id);
+        	} else {
+        		throw new Exception("prenotazione.notToday");
+        	}
+           
         }
     }
 

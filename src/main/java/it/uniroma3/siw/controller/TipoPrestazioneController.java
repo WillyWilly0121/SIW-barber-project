@@ -23,6 +23,6 @@ public class TipoPrestazioneController {
     @PostMapping("/admin/addTipoPrestazione")
     public String addTipoPrestazione(@Valid @ModelAttribute("tipoPrestazione")TipoPrestazione tipoPrestazione){
         tipoPrestazioneService.save(tipoPrestazione);
-        return "redirect:/index.html";
+        return "redirect:/";
     }
 }

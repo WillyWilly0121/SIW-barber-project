@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
-import java.time.Duration;
-
 @Entity
 public class TipoPrestazione {
 
@@ -18,11 +16,6 @@ public class TipoPrestazione {
     @NotNull
     @PositiveOrZero
     private Integer prezzo; // indicato in centesimi per evitare problemi con l'imprecisione dei float
-
-    @Column(nullable = false)
-    @NotNull
-    @PositiveOrZero
-    private Duration durata;
 
     @Column(unique = true,nullable = false)
     @NotBlank
@@ -44,14 +37,6 @@ public class TipoPrestazione {
 
     public void setPrezzo(Integer prezzo) {
         this.prezzo = prezzo;
-    }
-
-    public Duration getDurata() {
-        return durata;
-    }
-
-    public void setDurata(Duration durata) {
-        this.durata = durata;
     }
 
     public String getNome() {

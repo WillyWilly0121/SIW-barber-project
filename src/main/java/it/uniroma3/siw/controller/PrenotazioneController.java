@@ -78,6 +78,7 @@ public class PrenotazioneController {
             UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Credentials c = credentialsService.getCredentials(user.getUsername());
             model.addAttribute("prenotazioni", this.prenotazioneService.findAllByBarbiere(c.getUser()));
+            model.addAttribute("data", LocalDate.now());
             return "barber/prenotazioni";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());

@@ -30,7 +30,7 @@
 						</p>
 						<div class="d-inline-flex gap-2 m-4">
 							<a th:href="'/effettuaPrenotazione/' + ${prenotazione.id}"
-								class="btn btn-primary" th:text="'Effettua prenotazione'"></a>
+								class="btn btn-primary" th:classappend="${prenotazione.dataPrestazione==data ? '' : 'disabled'}" th:text="'Effettua prenotazione'"></a>
 							<a th:href="'/eliminaPrenotazione/' + ${prenotazione.id}"
 								class="btn btn-outline-danger" th:text="'Elimina prenotazione'"></a>
 						</div>

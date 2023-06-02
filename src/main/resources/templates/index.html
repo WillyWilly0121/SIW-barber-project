@@ -33,15 +33,24 @@
 						</button></a>
 
 				</div>
-				<div th:if="${credenziali.isAdmin()}" class="d-inline-flex gap-2 m-4">
-					<a href="/admin/Prenotazioni"><button th:text="'Visualizza tutte le prenotazioni'"
-							class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
-							type="button">
-						</button></a>
-					<a href="/admin/Prestazioni"><button th:text="'Visualizza tutte le prestazioni'"
-							class="d-inline-flex align-items-center btn btn-outline-primary btn-lg px-4 rounded-pill"
-							type="button">
-						</button></a>
+				<div th:if="${credenziali.isAdmin()}">
+					<div class="d-inline-flex gap-2 m-4">
+						<a href="/admin/Prenotazioni"><button th:text="'Visualizza tutte le prenotazioni'"
+								class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
+								type="button">
+							</button></a>
+						<a href="/admin/Prestazioni"><button th:text="'Visualizza tutte le prestazioni'"
+								class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
+								type="button">
+							</button></a>
+					</div>
+					<div>
+						<h5 class="text-body-emphasis" th:text="'Altre azioni:'"></h5>
+						<a href="/admin/formNewTipoPrestazione"><button th:text="'Aggiungi tipologia prestazione'"
+								class="d-inline-flex align-items-center btn btn-outline-primary btn-sm px-4 rounded-pill"
+								type="button">
+							</button></a>
+					</div>
 				</div>
 				<div th:if="${credenziali.isUser()}">
 					<div>

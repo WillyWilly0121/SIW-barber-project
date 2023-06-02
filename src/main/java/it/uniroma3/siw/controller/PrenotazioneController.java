@@ -36,10 +36,10 @@ public class PrenotazioneController {
         try {
             Prenotazione p = this.prenotazioneService.getPrenotazione(id);
             model.addAttribute("prenotazione", p);
-            return "/user/resocontoPrenotazione.html";
+            return "/user/resocontoPrenotazione";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
     
@@ -55,7 +55,7 @@ public class PrenotazioneController {
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
@@ -65,10 +65,10 @@ public class PrenotazioneController {
             UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Credentials c = credentialsService.getCredentials(user.getUsername());
             model.addAttribute("prenotazioni", this.prenotazioneService.findAllByUtente(c.getUser()));
-            return "user/prenotazioni.html";
+            return "user/prenotazioni";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
@@ -78,10 +78,10 @@ public class PrenotazioneController {
             UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Credentials c = credentialsService.getCredentials(user.getUsername());
             model.addAttribute("prenotazioni", this.prenotazioneService.findAllByBarbiere(c.getUser()));
-            return "barber/prenotazioni.html";
+            return "barber/prenotazioni";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
@@ -92,7 +92,7 @@ public class PrenotazioneController {
             return "";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
     
@@ -103,7 +103,7 @@ public class PrenotazioneController {
              return "redirect:/Prenotazioni";
          } catch (Exception e) {
              model.addAttribute("errorMessage", e.getMessage());
-             return "index.html";
+             return "index";
          }
     }
     
@@ -114,7 +114,7 @@ public class PrenotazioneController {
              return "redirect:/Prenotazioni";
          } catch (Exception e) {
              model.addAttribute("errorMessage", e.getMessage());
-             return "index.html";
+             return "index";
          }
     }
 
@@ -137,7 +137,7 @@ public class PrenotazioneController {
         model.addAttribute("idBar", barberId);
 
         Map<LocalDate, Integer> numeroPrenotazioniPerData = prenotazioneService.ottieniNumeroPrenotazioniPerData(barberId);
-        Map<LocalDate, Boolean> opzioniDate = new HashMap<>();
+        SortedMap<LocalDate, Boolean> opzioniDate = new TreeMap<>();
 
         int count = 1;
         for (LocalDate date = LocalDate.now(); count <= 7; count++) {
@@ -159,7 +159,7 @@ public class PrenotazioneController {
             LocalDate giorno = LocalDate.parse(data);
 
             Prenotazione p = new Prenotazione();
-            p.setBarbiere(utenteService.getUser(barberId));
+            p.setBarbiere(utenteService.getBarbiere(barberId));
             p.setPrestazione(tipoPrestazioneService.findById(tp));
             p.setUtente(c.getUser());
             p.setDataPrestazione(giorno);
@@ -178,18 +178,18 @@ public class PrenotazioneController {
     public String prenotazioniBarbiere(@PathVariable("id") Long barberId, Model model) {
         try {
             model.addAttribute("prenotazioni",
-                    this.prenotazioneService.findAllByBarbiere(utenteService.getUser(barberId)));
+                    this.prenotazioneService.findAllByBarbiere_Id(barberId));
             return "";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
     @GetMapping("/admin/Prenotazioni")
-    public String getAllPrenotazioni(@PathVariable("id") Long barberId, Model model) {
+    public String getAllPrenotazioni(Model model) {
         model.addAttribute("prenotazioni", this.prenotazioneService.getAllPrenotazioni());
-        return "";
+        return "admin/prenotazioni";
     }
 
 }

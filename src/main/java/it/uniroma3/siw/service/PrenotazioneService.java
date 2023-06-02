@@ -94,4 +94,7 @@ public class PrenotazioneService {
     public List<Prenotazione> findAllByBarbiere(Utente u) {
         return this.prenotazioneRepository.findAllByBarbiere(u);
     }
+
+    public List<Prenotazione> findAllByBarbiere_Id(Long barberId) {return this.prenotazioneRepository.findAllByBarbiere_Id(barberId);
+    }
 }

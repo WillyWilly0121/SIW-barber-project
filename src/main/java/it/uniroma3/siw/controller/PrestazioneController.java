@@ -33,7 +33,7 @@ public class PrestazioneController {
 			}
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
-			return "index.html";
+			return "index";
 		}
 	}
 
@@ -46,7 +46,7 @@ public class PrestazioneController {
             return "user/prestazioni";
         } catch(Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
@@ -59,7 +59,7 @@ public class PrestazioneController {
             return "barber/prestazioni";
         } catch(Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
@@ -70,7 +70,7 @@ public class PrestazioneController {
             return "admin/prestazioniUtente";
         } catch(Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
@@ -81,12 +81,12 @@ public class PrestazioneController {
             return "admin/prestazioniBarbiere";
         } catch(Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "index.html";
+            return "index";
         }
     }
 
 	@GetMapping("/admin/Prestazioni")
-	public String getAllPrestazioni(@PathVariable("id") Long barberId, Model model) {
+	public String getAllPrestazioni(Model model) {
 		model.addAttribute("prestazioni", this.prestazioneService.getAllPrestazioni());
 		return "";
 	}

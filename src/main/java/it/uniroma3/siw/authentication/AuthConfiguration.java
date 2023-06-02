@@ -14,9 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static it.uniroma3.siw.model.Credentials.ADMIN_ROLE;
-
 import javax.sql.DataSource;
+
+import static it.uniroma3.siw.model.Credentials.*;
 
 @Configuration
 @EnableWebSecurity
@@ -57,7 +57,11 @@ import javax.sql.DataSource;
                 .requestMatchers(HttpMethod.POST,"/register", "/login").permitAll()
                 .requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 .requestMatchers(HttpMethod.POST,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
-        		// tutti gli utenti autenticati possono accere alle pagine rimanenti 
+                .requestMatchers(HttpMethod.GET,"/barber/**").hasAnyAuthority(BARBER_ROLE)
+                .requestMatchers(HttpMethod.POST,"/barber/**").hasAnyAuthority(BARBER_ROLE)
+                .requestMatchers(HttpMethod.GET,"/user/**").hasAnyAuthority(DEFAULT_ROLE)
+                .requestMatchers(HttpMethod.POST,"/user/**").hasAnyAuthority(DEFAULT_ROLE)
+        		// tutti gli utenti autenticati possono accere alle pagine rimanenti
                 .anyRequest().authenticated()
                 // LOGIN: qui definiamo il login
                 .and().formLogin()

@@ -21,4 +21,6 @@ public interface PrenotazioneRepository extends CrudRepository<Prenotazione, Lon
     List<Prenotazione> findAllByUtente(Utente u);
     
     List<Prenotazione> findAllByBarbiere(Utente u);
+
+    List<Prenotazione> findAllByBarbiere_Id(Long barberId);
 }

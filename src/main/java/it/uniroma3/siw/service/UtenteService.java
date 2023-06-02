@@ -21,9 +21,8 @@ public class UtenteService {
     @Autowired
     protected CredentialsRepository credentialsRepository;
 
-    @Transactional
     public Utente getUser(Long id) throws Exception{
-        Utente result = this.userRepository.findById(id).orElse(null);
+        Utente result = this.credentialsRepository.findByRoleAndId(Credentials.DEFAULT_ROLE,id).orElse(null);
         if(result==null) {
         	throw new Exception("utente.notFound"); 
         } else {
@@ -31,12 +30,19 @@ public class UtenteService {
         }
     }
 
+    public Utente getBarbiere(Long id) throws Exception{
+        Utente result = this.credentialsRepository.findByRoleAndId(Credentials.BARBER_ROLE,id).orElse(null);
+        if(result==null) {
+            throw new Exception("barbiere.notFound");
+        } else {
+            return result;
+        }
+    }
     @Transactional
     public Utente saveUser(Utente user) {
         return this.userRepository.save(user);
     }
 
-    @Transactional
     public List<Utente> getAllUsers() {
         List<Utente> result = new ArrayList<>();
         Iterable<Utente> iterable = this.userRepository.findAll();

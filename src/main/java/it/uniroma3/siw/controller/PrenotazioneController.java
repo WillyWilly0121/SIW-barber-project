@@ -89,7 +89,7 @@ public class PrenotazioneController {
     public String prenotazioniUtente(@PathVariable("id") Long userId, Model model) {
         try {
             model.addAttribute("prenotazioni", this.prenotazioneService.findAllByUtente(utenteService.getUser(userId)));
-            return "";
+            return "admin/prenotazioniUtente";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index";
@@ -97,14 +97,27 @@ public class PrenotazioneController {
     }
     
     @GetMapping("/eliminaPrenotazione/{id}")
-    public String eliminaPrenotazione(@PathVariable("id") Long id, Model model) {
+    public String eliminaPrenotazione(@PathVariable("id") Long idPren, Model model) {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Credentials c = credentialsService.getCredentials(user.getUsername());
     	 try {
-             this.prenotazioneService.eliminaPrenotazione(id);
+             this.prenotazioneService.eliminaPrenotazioneAttempt(idPren,c.getUser());
              return "redirect:/Prenotazioni";
          } catch (Exception e) {
              model.addAttribute("errorMessage", e.getMessage());
              return "index";
          }
+    }
+
+    @GetMapping("/admin/eliminaPrenotazione/{id}")
+    public String eliminaPrenotazioneAdmin(@PathVariable("id") Long id, Model model) {
+        try {
+            this.prenotazioneService.eliminaPrenotazione(id);
+            return "redirect:/admin/Prenotazioni";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "index";
+        }
     }
     
     @GetMapping("/effettuaPrenotazione/{id}")
@@ -179,7 +192,7 @@ public class PrenotazioneController {
         try {
             model.addAttribute("prenotazioni",
                     this.prenotazioneService.findAllByBarbiere_Id(barberId));
-            return "";
+            return "admin/prenotazioniBarbiere";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index";

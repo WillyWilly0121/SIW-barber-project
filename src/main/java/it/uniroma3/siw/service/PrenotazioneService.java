@@ -57,8 +57,8 @@ public class PrenotazioneService {
     }
 
     @Transactional
-    public void eliminaPrenotazione(Long id) throws Exception{
-    	Prenotazione pr = this.prenotazioneRepository.findById(id).orElse(null);
+    public void eliminaPrenotazione(Long id) throws Exception {
+        Prenotazione pr = this.prenotazioneRepository.findById(id).orElse(null);
         if (pr == null) {
             throw new Exception("prenotazione.notFound");
         } else {
@@ -95,6 +95,16 @@ public class PrenotazioneService {
         return this.prenotazioneRepository.findAllByBarbiere(u);
     }
 
-    public List<Prenotazione> findAllByBarbiere_Id(Long barberId) {return this.prenotazioneRepository.findAllByBarbiere_Id(barberId);
+    public List<Prenotazione> findAllByBarbiere_Id(Long barberId) {
+        return this.prenotazioneRepository.findAllByBarbiere_Id(barberId);
+    }
+
+    public void eliminaPrenotazioneAttempt(Long idPren, Utente user) throws Exception {
+        Prenotazione pren = getPrenotazione(idPren);
+        if (pren.getUtente().equals(user) || pren.getBarbiere().equals(user)) {
+            this.prenotazioneRepository.deleteById(idPren);
+        } else {
+            throw new Exception("prenotazione.DeleteNotAllowed");
+        }
     }
 }

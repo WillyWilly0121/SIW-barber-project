@@ -88,7 +88,7 @@ public class PrestazioneController {
 	@GetMapping("/admin/Prestazioni")
 	public String getAllPrestazioni(Model model) {
 		model.addAttribute("prestazioni", this.prestazioneService.getAllPrestazioni());
-		return "";
+		return "admin/prestazioni";
 	}
 
 }

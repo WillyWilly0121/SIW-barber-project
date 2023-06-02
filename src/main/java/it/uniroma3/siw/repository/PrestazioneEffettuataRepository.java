@@ -5,9 +5,11 @@ import org.springframework.data.repository.CrudRepository;
 
 import it.uniroma3.siw.model.PrestazioneEffettuata;
 
+import java.util.List;
+
 
 public interface PrestazioneEffettuataRepository extends CrudRepository<PrestazioneEffettuata, Long> {
-    Iterable<PrestazioneEffettuata> findAllByUtente(Utente u);
+    List<PrestazioneEffettuata> findAllByUtente(Utente u);
 
-    Iterable<PrestazioneEffettuata> findAllByBarbiere(Utente u);
+    List<PrestazioneEffettuata> findAllByBarbiere(Utente u);
 }

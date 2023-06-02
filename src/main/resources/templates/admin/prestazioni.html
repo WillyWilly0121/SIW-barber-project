@@ -21,12 +21,12 @@
                 <h5 class="card-header" th:text="${effettuata.prestazione.nome}"></h5>
                 <div class="card-body">
                     <h5 class="card-title">Barbiere: <a
-                            th:href="@{'/admin/PrenotazioniBarbiere/'+${effettuata.barbiere.id}}"
+                            th:href="@{'/admin/PrestazioniBarbiere/'+${effettuata.barbiere.id}}"
                             th:text="${effettuata.barbiere.name+' '+effettuata.barbiere.surname}"></a></h5>
-                    <h5 class="card-title">Cliente: <a th:href="@{'/admin/PrenotazioniUtente/'+${effettuata.utente.id}}"
+                    <h5 class="card-title">Cliente: <a th:href="@{'/admin/PrestazioniUtente/'+${effettuata.utente.id}}"
                                                        th:text="${effettuata.utente.name+' '+effettuata.utente.surname}"></a>
                     </h5>
-                    <p class="card-text" th:text="'Per il giorno: ' + ${effettuata.dataPrestazione}"></p>
+                    <p class="card-text" th:text="'Effettuata il giorno: ' + ${effettuata.dataPrestazione}"></p>
                     <p class="card-text" th:text="'Prezzo: ' + ${effettuata.prestazione.prezzo/100.0} + ' EUR'"></p>
                 </div>
             </div>

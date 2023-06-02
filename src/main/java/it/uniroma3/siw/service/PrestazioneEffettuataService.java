@@ -7,22 +7,24 @@ import org.springframework.stereotype.Service;
 import it.uniroma3.siw.model.PrestazioneEffettuata;
 import it.uniroma3.siw.repository.PrestazioneEffettuataRepository;
 
+import java.util.List;
+
 @Service
 public class PrestazioneEffettuataService {
-	
-	@Autowired
-	private PrestazioneEffettuataRepository prestazioneEffettuataRepository;
-	
-	public Iterable<PrestazioneEffettuata> getAllPrestazioni(){
-		return this.prestazioneEffettuataRepository.findAll();
-	}
 
-	public Iterable<PrestazioneEffettuata> findAllByUtente(Utente u){
-		return this.prestazioneEffettuataRepository.findAllByUtente(u);
-	}
+    @Autowired
+    private PrestazioneEffettuataRepository prestazioneEffettuataRepository;
 
-	public Iterable<PrestazioneEffettuata> findAllByBarbiere(Utente u){
-		return this.prestazioneEffettuataRepository.findAllByBarbiere(u);
-	}
+    public Iterable<PrestazioneEffettuata> getAllPrestazioni() {
+        return this.prestazioneEffettuataRepository.findAll();
+    }
+
+    public List<PrestazioneEffettuata> findAllByUtente(Utente u) {
+        return this.prestazioneEffettuataRepository.findAllByUtente(u);
+    }
+
+    public List<PrestazioneEffettuata> findAllByBarbiere(Utente u) {
+        return this.prestazioneEffettuataRepository.findAllByBarbiere(u);
+    }
 
 }

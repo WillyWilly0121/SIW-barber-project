@@ -90,6 +90,8 @@ public class PrenotazioneController {
     public String prenotazioniUtente(@PathVariable("id") Long userId, Model model) {
         try {
             model.addAttribute("prenotazioni", this.prenotazioneService.findAllByUtente(utenteService.getUser(userId)));
+            model.addAttribute("utente",utenteService.getUser(userId));
+
             return "admin/prenotazioniUtente";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -191,8 +193,8 @@ public class PrenotazioneController {
     @GetMapping("/admin/PrenotazioniBarbiere/{id}")
     public String prenotazioniBarbiere(@PathVariable("id") Long barberId, Model model) {
         try {
-            model.addAttribute("prenotazioni",
-                    this.prenotazioneService.findAllByBarbiere_Id(barberId));
+            model.addAttribute("prenotazioni", this.prenotazioneService.findAllByBarbiere_Id(barberId));
+            model.addAttribute("barbiere",utenteService.getBarbiere(barberId));
             return "admin/prenotazioniBarbiere";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());

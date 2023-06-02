@@ -14,28 +14,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PrestazioneController {
-	@Autowired
-	PrestazioneEffettuataService prestazioneService;
-	@Autowired
-	CredentialsService credentialsService;
-	@Autowired
-	UtenteService utenteService;
+    @Autowired
+    PrestazioneEffettuataService prestazioneService;
+    @Autowired
+    CredentialsService credentialsService;
+    @Autowired
+    UtenteService utenteService;
 
-	@GetMapping("/Prestazioni")
-	public String prestazioni(Model model) {
-		try {
-			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			Credentials c = credentialsService.getCredentials(user.getUsername());
-			if (c.getRole().equals(Credentials.DEFAULT_ROLE)) {
-				return "redirect:/user/Prestazioni";
-			} else {
-				return "redirect:/barber/Prestazioni";
-			}
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", e.getMessage());
-			return "index";
-		}
-	}
+    @GetMapping("/Prestazioni")
+    public String prestazioni(Model model) {
+        try {
+            UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Credentials c = credentialsService.getCredentials(user.getUsername());
+            if (c.getRole().equals(Credentials.DEFAULT_ROLE)) {
+                return "redirect:/user/Prestazioni";
+            } else {
+                return "redirect:/barber/Prestazioni";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "index";
+        }
+    }
 
     @GetMapping("/user/Prestazioni")
     public String prestazioniUtente(Model model) {
@@ -44,7 +44,7 @@ public class PrestazioneController {
             Credentials c = credentialsService.getCredentials(user.getUsername());
             model.addAttribute("prestazioni", this.prestazioneService.findAllByUtente(c.getUser()));
             return "user/prestazioni";
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index";
         }
@@ -57,38 +57,40 @@ public class PrestazioneController {
             Credentials c = credentialsService.getCredentials(user.getUsername());
             model.addAttribute("prestazioni", this.prestazioneService.findAllByBarbiere(c.getUser()));
             return "barber/prestazioni";
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index";
         }
     }
 
     @GetMapping("/admin/PrestazioniUtente/{id}")
-    public String prestazioniUtente(@PathVariable("id") Long userId,Model model){
+    public String prestazioniUtenteAdmin(@PathVariable("id") Long userId, Model model) {
         try {
             model.addAttribute("prestazioni", this.prestazioneService.findAllByUtente(utenteService.getUser(userId)));
+            model.addAttribute("utente", utenteService.getUser(userId));
             return "admin/prestazioniUtente";
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index";
         }
     }
 
     @GetMapping("/admin/PrestazioniBarbiere/{id}")
-    public String prestazioniBarbiere(@PathVariable("id") Long barberId,Model model){
+    public String prestazioniBarbiereAdmin(@PathVariable("id") Long barberId, Model model) {
         try {
-            model.addAttribute("prestazioni", this.prestazioneService.findAllByBarbiere(utenteService.getUser(barberId)));
+            model.addAttribute("prestazioni", this.prestazioneService.findAllByBarbiere(utenteService.getBarbiere(barberId)));
+            model.addAttribute("barbiere", utenteService.getBarbiere(barberId));
             return "admin/prestazioniBarbiere";
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "index";
         }
     }
 
-	@GetMapping("/admin/Prestazioni")
-	public String getAllPrestazioni(Model model) {
-		model.addAttribute("prestazioni", this.prestazioneService.getAllPrestazioni());
-		return "admin/prestazioni";
-	}
+    @GetMapping("/admin/Prestazioni")
+    public String getAllPrestazioni(Model model) {
+        model.addAttribute("prestazioni", this.prestazioneService.getAllPrestazioni());
+        return "admin/prestazioni";
+    }
 
 }

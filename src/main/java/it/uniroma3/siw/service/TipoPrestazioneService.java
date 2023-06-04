@@ -13,7 +13,7 @@ public class TipoPrestazioneService {
 	private TipoPrestazioneRepository tipoPrestazioneRepository;
 	
 	public Iterable<TipoPrestazione> findAllTipiPrestazioni(){
-		return this.tipoPrestazioneRepository.findAll();
+		return this.tipoPrestazioneRepository.findAllByOrderById();
 	}
 
 	public TipoPrestazione findById(Long id) throws Exception{
@@ -26,5 +26,11 @@ public class TipoPrestazioneService {
 
 	public void save(TipoPrestazione tipoPrestazione) {
 		tipoPrestazioneRepository.save(tipoPrestazione);
+	}
+	
+	public void updateTipoP(Long id, Integer prezzo) throws Exception{
+		TipoPrestazione tp = this.findById(id);
+		tp.setPrezzo(prezzo);
+		this.save(tp);
 	}
 }

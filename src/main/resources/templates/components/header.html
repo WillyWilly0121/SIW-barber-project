@@ -1,24 +1,21 @@
-<header
-	class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom p-3">
-	<div class="col-md-3 mb-2 mb-md-0">
-		<a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-			<img src="/images/logo-barber.png" width="50%" />
-		</a>
-	</div>
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom p-3">
+    <div class="col-md-3 mb-2 mb-md-0">
+        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"> <img src="/images/logo-barber.png"
+                                                                                        width="50%"/> </a>
+    </div>
 
-	<div th:if="${userDetails!=null}" class="col-md-3 text-end">
-		<div class="dropdown">
-			<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-				aria-expanded="false" th:text="${userDetails.username}">
-			</button>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" th:href="@{'/userDetails' + '/' + ${credenziali.user.id}}"
-						th:text="'Informazioni Personali'"></a></li>
-				<li><a class="dropdown-item" href="/logout" th:text="'Logout'"></a></li>
-			</ul>
-		</div>
-	</div>
-	<div th:unless="${userDetails!=null}" class="col-md-3 text-end">
-		<a href="/login"><button type="button" class="btn btn-outline-primary me-2" th:text="'Login'"></button></a>
-	</div>
+    <div th:if="${userDetails!=null}" class="col-md-3 text-end">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" th:text="${userDetails.username}"></button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/logout" th:text="'Logout'"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div th:unless="${userDetails!=null}" class="col-md-3 text-end">
+        <a href="/login">
+            <button type="button" class="btn btn-outline-primary me-2" th:text="'Login'"></button>
+        </a>
+    </div>
 </header>
